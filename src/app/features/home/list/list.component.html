@@ -1,4 +1,20 @@
 <h2>Pokemon list</h2>
-<pre>
-  {{ pokemonList | async | json}}
-</pre>
+
+<ng-container *ngIf="pokemonList$ | async as pokemonList; else errorOrLoadingTemplate">
+  <ul>
+    <li *ngFor="let pokemon of pokemonList">
+      <a [routerLink]="pokemon.id">{{ pokemon.name }}</a>
+    </li>
+  </ul>
+</ng-container>
+
+<ng-template #errorOrLoadingTemplate>
+  <ng-container *ngIf="isLoading; else errorTemplate">
+    Loading...
+  </ng-container>
+</ng-template>
+
+<ng-template #errorTemplate>
+  Cannot fetch pokemon list :(
+</ng-template>
+

@@ -1,15 +1,15 @@
-<ng-container *ngIf="pokemon$ | async as pokemon; else pokemonNotFoundOrLoadingTemplate">
+<ng-container *ngIf="pokemon$ | async as pokemon; else errorOrLoadingTemplate">
   <h2>{{ pokemon.name }}</h2>
   <img src="{{ pokemon.image}}" />
   <pre>{{ pokemon.stats | json}}</pre>
 </ng-container>
 
-<ng-template #pokemonNotFoundOrLoadingTemplate>
-  <ng-container *ngIf="isLoading; else pokemonNotFoundTemplate">
+<ng-template #errorOrLoadingTemplate>
+  <ng-container *ngIf="isLoading; else errorTemplate">
     Loading...
   </ng-container>
 </ng-template>
 
-<ng-template #pokemonNotFoundTemplate>
+<ng-template #errorTemplate>
   Pokemon not found :(
 </ng-template>
