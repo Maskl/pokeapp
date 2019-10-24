@@ -6,6 +6,10 @@
       <a [routerLink]="pokemon.id">{{ pokemon.name }}</a>
     </li>
   </ul>
+
+  <button (click)="previousPage()" [disabled]="page <= 1">PREV</button>
+  {{ page }}
+  <button (click)="nextPage()" [disabled]="page >= MAX_PAGE_NUMBER">NEXT</button>
 </ng-container>
 
 <ng-template #errorOrLoadingTemplate>

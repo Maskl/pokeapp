@@ -2,6 +2,9 @@
   <h2>{{ pokemon.name }}</h2>
   <img src="{{ pokemon.image}}" />
   <pre>{{ pokemon.stats | json}}</pre>
+
+  <button [routerLink]="['/', (pokemon.id - 1)]" [disabled]="pokemon.id <= 1" >PREV</button>
+  <button [routerLink]="['/', (pokemon.id + 1)]">NEXT</button>
 </ng-container>
 
 <ng-template #errorOrLoadingTemplate>
