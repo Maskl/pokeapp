@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { IPokemonDetailsData, IPokemonListData } from './pokemon.model';
@@ -67,7 +67,7 @@ export class PokeApiService {
 
   public getPokemonById(id: number): Observable<IPokemonDetailsData> {
     if (!PokeApiService.isCorrectPokemonId(id)) {
-      return null;
+      return of(null); // TODO: Implement proper error handling
     }
 
     return this.http
@@ -79,7 +79,7 @@ export class PokeApiService {
 
   public getPokemonList(page: number): Observable<IPokemonListData[]> {
     if (!PokeApiService.isCorrectPageNumber(page)) {
-      return null;
+      return of(null); // TODO: Implement proper error handling
     }
 
     const { limit, offset }: IApiPagination = PokeApiService.prepareApiPagination(page);

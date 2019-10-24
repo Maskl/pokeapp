@@ -1,15 +1,1 @@
-import { Component } from '@angular/core';
-import { PokeApiService } from '../../core/poke-api.service';
-
-@Component({
-  selector: 'app-details',
-  templateUrl: './details.component.html',
-  styleUrls: ['./details.component.scss']
-})
-export class DetailsComponent {
-  public pokemon: any;
-
-  constructor(private pokeApiService: PokeApiService) {
-    this.pokemon = pokeApiService.getPokemonById(1);
-  }
-}
+import { Component, OnInit } from '@angular/core';import { ActivatedRoute } from '@angular/router';import { Observable, of } from 'rxjs';import { finalize } from 'rxjs/operators';import { PokeApiService } from '../../core/poke-api.service';import { IPokemonDetailsData } from '../../core/pokemon.model';@Component({  selector: 'app-details',  templateUrl: './details.component.html',  styleUrls: ['./details.component.scss']})export class DetailsComponent implements OnInit {  public isLoading: boolean = true;  public pokemon$: Observable<IPokemonDetailsData | { error: string }>;  constructor(    private activatedRoute: ActivatedRoute,    private pokeApiService: PokeApiService  ) {}  // TODO: Logic should be splitted into smaller methods and moved to service  public ngOnInit() {    const idParam: string = this.activatedRoute.snapshot.paramMap.get('id');    if (/^[1-9][0-9]*$/.test(idParam)) {      this.isLoading = true;      this.pokemon$ = this.pokeApiService        .getPokemonById(+idParam)        .pipe(          finalize(() => this.isLoading = false)        );    } else {      this.isLoading = false;      this.pokemon$ = of(null);    }  }}

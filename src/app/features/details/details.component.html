@@ -1,4 +1,15 @@
-<h2>{{ (pokemon | async)?.name }}</h2>
-<pre>
-  {{ pokemon | async | json}}
-</pre>
+<ng-container *ngIf="pokemon$ | async as pokemon; else pokemonNotFoundOrLoadingTemplate">
+  <h2>{{ pokemon.name }}</h2>
+  <img src="{{ pokemon.image}}" />
+  <pre>{{ pokemon.stats | json}}</pre>
+</ng-container>
+
+<ng-template #pokemonNotFoundOrLoadingTemplate>
+  <ng-container *ngIf="isLoading; else pokemonNotFoundTemplate">
+    Loading...
+  </ng-container>
+</ng-template>
+
+<ng-template #pokemonNotFoundTemplate>
+  Pokemon not found :(
+</ng-template>
