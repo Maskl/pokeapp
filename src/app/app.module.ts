@@ -4,10 +4,18 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HomeComponent } from './features/home/home.component';
+import { DetailsComponent } from './features/details/details.component';
+import { FormComponent } from './features/home/form/form.component';
+import { ListComponent } from './features/home/list/list.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    DetailsComponent,
+    FormComponent,
+    ListComponent
   ],
   imports: [
     BrowserModule,
