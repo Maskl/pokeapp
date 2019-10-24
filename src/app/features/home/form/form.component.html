@@ -1,6 +1,8 @@
-<p>
-  FORM PLACEHOLDER
-</p>
-<p>
-  Example details page: <a routerLink="/42">Pokemon Details</a>
-</p>
+<form [formGroup]="searchForm" (ngSubmit)="onFormSubmit()">
+  <label>
+    First Name:
+    <input type="text" formControlName="id">
+  </label>
+
+  <button type="submit" [disabled]="!searchForm.valid">Submit</button>
+</form>

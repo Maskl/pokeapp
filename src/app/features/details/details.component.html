@@ -1,4 +1,4 @@
-<h2>Pokemon</h2>
+<h2>{{ (pokemon | async)?.name }}</h2>
 <pre>
   {{ pokemon | async | json}}
 </pre>
