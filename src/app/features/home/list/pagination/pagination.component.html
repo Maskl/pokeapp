@@ -1,0 +1,13 @@
+<section class="pagination-wrapper">
+  <button mat-mini-fab (click)="previousPage()" [disabled]="page <= 1">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+
+  <span>
+    Page: {{ page }}
+  </span>
+
+  <button mat-mini-fab (click)="nextPage()" [disabled]="page >= maxPageNumber">
+    <mat-icon>arrow_forward</mat-icon>
+  </button>
+</section>

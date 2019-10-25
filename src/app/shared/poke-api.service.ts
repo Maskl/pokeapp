@@ -4,7 +4,8 @@ import * as _ from 'lodash';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { IPokemonDetailsData, IPokemonListData } from './pokemon.model';
+import { IPokemonDetailsData, IPokemonListData, IPokemonStatsData } from './pokemon.model';
+import { ValidatorService } from './validator.service';
 
 interface IApiPagination {
   limit: number;
@@ -16,12 +17,6 @@ interface IApiPagination {
 })
 export class PokeApiService {
   private static readonly API_HOSTNAME: string = 'https://pokeapi.co/api/v2';
-  private static readonly RESULTS_PER_PAGE: number = 10;
-  private static readonly MAX_PAGE_NUMBER: number = 10;
-
-  private static isCorrectPokemonId(id: number): boolean {
-    return id > 0 && id <= PokeApiService.MAX_PAGE_NUMBER * PokeApiService.RESULTS_PER_PAGE;
-  }
 
   private static parsePokemonApiData(pokemonApiData: any): IPokemonDetailsData {
     return {
@@ -32,21 +27,18 @@ export class PokeApiService {
     };
   }
 
-  private static parseStatsApiData(statsApiData: any): string[] {
+  private static parseStatsApiData(statsApiData: any): IPokemonStatsData[] {
     return _.map(statsApiData, (statApiData: any) => ({
       name: _.get(statApiData, 'stat.name'),
-      baseStat: statApiData.base_stat
+      baseStat: statApiData.base_stat,
+      effort: statApiData.effort
     }));
-  }
-
-  private static isCorrectPageNumber(page: number): boolean {
-    return page > 0 && page <= PokeApiService.MAX_PAGE_NUMBER;
   }
 
   private static prepareApiPagination(page: number): IApiPagination {
     return {
-      limit: PokeApiService.RESULTS_PER_PAGE,
-      offset: (page - 1) * PokeApiService.RESULTS_PER_PAGE
+      limit: ValidatorService.RESULTS_PER_PAGE,
+      offset: (page - 1) * ValidatorService.RESULTS_PER_PAGE
     };
   }
 
@@ -66,7 +58,7 @@ export class PokeApiService {
   public constructor(private http: HttpClient) {}
 
   public getPokemonById(id: number): Observable<IPokemonDetailsData> {
-    if (!PokeApiService.isCorrectPokemonId(id)) {
+    if (!ValidatorService.isCorrectPokemonId(id)) {
       return of(null); // TODO: Implement proper error handling
     }
 
@@ -78,7 +70,7 @@ export class PokeApiService {
   }
 
   public getPokemonList(page: number): Observable<IPokemonListData[]> {
-    if (!PokeApiService.isCorrectPageNumber(page)) {
+    if (!ValidatorService.isCorrectPageNumber(page)) {
       return of(null); // TODO: Implement proper error handling
     }
 

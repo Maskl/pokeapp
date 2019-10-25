@@ -5,5 +5,11 @@ export interface IPokemonListData {
 
 export interface IPokemonDetailsData extends IPokemonListData {
   image: string;
-  stats: any; // TODO: define it
+  stats: IPokemonStatsData[];
+}
+
+export interface IPokemonStatsData {
+  name: string;
+  baseStat: number;
+  effort: number;
 }

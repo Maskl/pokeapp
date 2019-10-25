@@ -15,7 +15,7 @@ export class FormComponent {
         Validators.required,
         Validators.pattern('^[1-9][0-9]*$')
       ]
-    ),
+    )
   });
 
   public constructor(private router: Router) {}

@@ -1,35 +1,27 @@
-<h1>Pokemon list</h1>
+<mat-card>
+  <mat-card-title>Pokemon List</mat-card-title>
 
-<ng-container *ngIf="pokemonList$ | async as pokemonList; else errorOrLoadingTemplate">
-  <mat-list>
-    <mat-list-item *ngFor="let pokemon of pokemonList">
-      <mat-icon matListIcon>star</mat-icon>
-      <a [routerLink]="pokemon.id">
-        {{ pokemon.name }}
-      </a>
-    </mat-list-item>
-  </mat-list>
+  <app-loader *ngIf="isLoading$ | async; else loadedTemplate"></app-loader>
 
-  <section class="pagination">
-    <button mat-fab (click)="previousPage()" [disabled]="page <= 1">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-    <span>
-      Page: {{ page }}
-    </span>
-    <button mat-fab (click)="nextPage()" [disabled]="page >= MAX_PAGE_NUMBER">
-      <mat-icon>arrow_forward</mat-icon>
-    </button>
-  </section>
-</ng-container>
+  <ng-template #loadedTemplate>
+    <mat-card-content>
+      <ng-container *ngIf="pokemonList$ | async as pokemonList; else errorTemplate">
+        <mat-list>
+          <mat-list-item *ngFor="let pokemon of pokemonList">
+            <mat-icon matListIcon>star</mat-icon>
+            <a [routerLink]="pokemon.id">
+              {{ pokemon.name }}
+            </a>
+          </mat-list-item>
+        </mat-list>
+      </ng-container>
+    </mat-card-content>
+  </ng-template>
 
-<ng-template #errorOrLoadingTemplate>
-  <div class="error-or-loading">
-    <ng-container *ngIf="isLoading; else errorTemplate">
-      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-    </ng-container>
-  </div>
-</ng-template>
+  <mat-card-footer>
+    <app-pagination (pageChange)="loadPage($event)"></app-pagination>
+  </mat-card-footer>
+</mat-card>
 
 <ng-template #errorTemplate>
   Cannot fetch pokemon list :(

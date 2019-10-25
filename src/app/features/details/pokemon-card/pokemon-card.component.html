@@ -1,0 +1,43 @@
+<mat-card>
+  <mat-card-title>
+    <h1>
+      {{ pokemon.name | titlecase }}
+    </h1>
+
+    <img [src]="pokemon.image" alt="Pokemon image">
+  </mat-card-title>
+
+  <mat-card-content>
+    <table mat-table [dataSource]="statsTableDataSource">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>
+          Stats
+        </th>
+        <td mat-cell *matCellDef="let stat">
+          {{ stat.name }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="baseStat">
+        <th mat-header-cell *matHeaderCellDef>
+          Base
+        </th>
+        <td mat-cell *matCellDef="let stat">
+          {{ stat.baseStat }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="effort">
+        <th mat-header-cell *matHeaderCellDef>
+          Effort
+        </th>
+        <td mat-cell *matCellDef="let stat">
+          {{ stat.effort }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="statsTableColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: statsTableColumns;"></tr>
+    </table>
+  </mat-card-content>
+</mat-card>

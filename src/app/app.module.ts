@@ -1,15 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { HomeComponent } from './features/home/home.component';
-import { DetailsComponent } from './features/details/details.component';
-import { FormComponent } from './features/home/form/form.component';
-import { ListComponent } from './features/home/list/list.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatButtonModule,
   MatCardModule,
@@ -17,16 +8,32 @@ import {
   MatIconModule,
   MatInputModule, MatListModule,
   MatProgressSpinnerModule,
+  MatTableModule,
   MatToolbarModule
 } from '@angular/material';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { DetailsComponent } from './features/details/details.component';
+import { PokemonCardComponent } from './features/details/pokemon-card/pokemon-card.component';
+import { FormComponent } from './features/home/form/form.component';
+import { HomeComponent } from './features/home/home.component';
+import { ListComponent } from './features/home/list/list.component';
+import { PaginationComponent } from './features/home/list/pagination/pagination.component';
+import { LoaderComponent } from './shared/loader/loader.component';
 
 @NgModule({
   declarations: [
+    LoaderComponent,
     AppComponent,
     HomeComponent,
     DetailsComponent,
     FormComponent,
-    ListComponent
+    ListComponent,
+    PaginationComponent,
+    PokemonCardComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +48,7 @@ import {
     MatInputModule,
     MatFormFieldModule,
     MatProgressSpinnerModule,
+    MatTableModule,
     MatToolbarModule
   ],
   providers: [],

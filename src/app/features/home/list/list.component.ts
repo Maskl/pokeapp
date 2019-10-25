@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { PokeApiService } from '../../../core/poke-api.service';
-import { Observable } from 'rxjs';
-import { IPokemonListData } from '../../../core/pokemon.model';
-import { finalize } from 'rxjs/operators';
+import { BehaviorSubject, merge, Observable, of } from 'rxjs';
+import { catchError, mapTo, shareReplay, switchMap } from 'rxjs/operators';
+
+import { PokeApiService } from '../../../shared/poke-api.service';
+import { IPokemonListData } from '../../../shared/pokemon.model';
 
 @Component({
   selector: 'app-list',
@@ -10,38 +11,36 @@ import { finalize } from 'rxjs/operators';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-  public readonly MAX_PAGE_NUMBER: number = 10; // TODO: Merge with const from PokeApiService
-  public page: number = 1;
-  public isLoading: boolean = true;
   public pokemonList$: Observable<IPokemonListData[]>;
+  public isLoading$: Observable<boolean>;
+  public page$: BehaviorSubject<number> = new BehaviorSubject(1);
 
   constructor(private pokeApiService: PokeApiService) {}
 
-  // TODO: Logic should be moved to service
-  public ngOnInit() {
-    this.loadPokemonList();
-  }
-
-  // TODO: Move pagination to separate component
-  public previousPage(): void {
-    this.page = this.page - 1;
-
-    this.loadPokemonList();
-  }
-
-  public nextPage(): void {
-    this.page = this.page + 1;
-
-    this.loadPokemonList();
-  }
-
-  private loadPokemonList(): void {
-    this.isLoading = true;
-
-    this.pokemonList$ = this.pokeApiService
-      .getPokemonList(this.page)
+  public ngOnInit(): void {
+    this.pokemonList$ = this.page$
       .pipe(
-        finalize(() => this.isLoading = false)
+        switchMap((page: number) => {
+          return this.pokeApiService
+            .getPokemonList(page)
+            .pipe(
+              catchError(() => of(null)) // Just to simplify error handling
+            );
+        }),
+        shareReplay()
       );
+
+    this.isLoading$ = merge(
+      this.page$.pipe(
+        mapTo(true)
+      ),
+      this.pokemonList$.pipe(
+        mapTo(false)
+      )
+    );
+  }
+
+  public loadPage(page: number): void {
+    this.page$.next(page);
   }
 }
