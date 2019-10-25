@@ -9,6 +9,16 @@ import { HomeComponent } from './features/home/home.component';
 import { DetailsComponent } from './features/details/details.component';
 import { FormComponent } from './features/home/form/form.component';
 import { ListComponent } from './features/home/list/list.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule, MatListModule,
+  MatProgressSpinnerModule,
+  MatToolbarModule
+} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -22,7 +32,16 @@ import { ListComponent } from './features/home/list/list.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatListModule,
+    MatIconModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatProgressSpinnerModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,16 +1,33 @@
-<ng-container *ngIf="pokemon$ | async as pokemon; else errorOrLoadingTemplate">
-  <h2>{{ pokemon.name }}</h2>
-  <img src="{{ pokemon.image}}" />
-  <pre>{{ pokemon.stats | json}}</pre>
+<div class="details-wrapper" *ngIf="pokemon$ | async as pokemon; else errorOrLoadingTemplate">
+  <div class="button-wrapper">
+    <button mat-fab [routerLink]="['/', (pokemon.id - 1)]" [disabled]="pokemon.id <= 1" >
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </div>
+  <mat-card>
+    <mat-card-title>
+    {{ pokemon.name }}
+    </mat-card-title>
 
-  <button [routerLink]="['/', (pokemon.id - 1)]" [disabled]="pokemon.id <= 1" >PREV</button>
-  <button [routerLink]="['/', (pokemon.id + 1)]">NEXT</button>
-</ng-container>
+    <mat-card-content>
+      <img src="{{ pokemon.image}}" />
+
+      <pre>{{ pokemon.stats | json}}</pre>
+    </mat-card-content>
+  </mat-card>
+  <div class="button-wrapper">
+    <button mat-fab [routerLink]="['/', (pokemon.id + 1)]">
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </div>
+</div>
 
 <ng-template #errorOrLoadingTemplate>
-  <ng-container *ngIf="isLoading; else errorTemplate">
-    Loading...
+  <div class="error-or-loading">
+    <ng-container *ngIf="isLoading; else errorTemplate">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
   </ng-container>
+  </div>
 </ng-template>
 
 <ng-template #errorTemplate>

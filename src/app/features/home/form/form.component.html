@@ -1,8 +1,11 @@
-<form [formGroup]="searchForm" (ngSubmit)="onFormSubmit()">
-  <label>
-    First Name:
-    <input type="text" formControlName="id">
-  </label>
+<h1>Search Pokemon</h1>
 
-  <button type="submit" [disabled]="!searchForm.valid">Submit</button>
+<form [formGroup]="searchForm" (ngSubmit)="onFormSubmit()">
+  <mat-form-field>
+    <label>
+      <input matInput type="number" formControlName="id" placeholder="Pokemon ID">
+    </label>
+  </mat-form-field>
+
+  <button mat-raised-button color="accent" type="submit" [disabled]="!searchForm.valid">Search</button>
 </form>

@@ -1,0 +1,16 @@
+.details-wrapper {
+  display: flex;
+
+  .button-wrapper {
+    flex: 1;
+    text-align: center;
+    padding-top: 75px;
+  }
+
+  mat-card {
+    flex: 2;
+    margin: 10px;
+    position: center;
+    width: 300px;
+  }
+}

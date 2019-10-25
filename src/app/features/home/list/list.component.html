@@ -1,21 +1,34 @@
-<h2>Pokemon list</h2>
+<h1>Pokemon list</h1>
 
 <ng-container *ngIf="pokemonList$ | async as pokemonList; else errorOrLoadingTemplate">
-  <ul>
-    <li *ngFor="let pokemon of pokemonList">
-      <a [routerLink]="pokemon.id">{{ pokemon.name }}</a>
-    </li>
-  </ul>
+  <mat-list>
+    <mat-list-item *ngFor="let pokemon of pokemonList">
+      <mat-icon matListIcon>star</mat-icon>
+      <a [routerLink]="pokemon.id">
+        {{ pokemon.name }}
+      </a>
+    </mat-list-item>
+  </mat-list>
 
-  <button (click)="previousPage()" [disabled]="page <= 1">PREV</button>
-  {{ page }}
-  <button (click)="nextPage()" [disabled]="page >= MAX_PAGE_NUMBER">NEXT</button>
+  <section class="pagination">
+    <button mat-fab (click)="previousPage()" [disabled]="page <= 1">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>
+      Page: {{ page }}
+    </span>
+    <button mat-fab (click)="nextPage()" [disabled]="page >= MAX_PAGE_NUMBER">
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </section>
 </ng-container>
 
 <ng-template #errorOrLoadingTemplate>
-  <ng-container *ngIf="isLoading; else errorTemplate">
-    Loading...
-  </ng-container>
+  <div class="error-or-loading">
+    <ng-container *ngIf="isLoading; else errorTemplate">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </ng-container>
+  </div>
 </ng-template>
 
 <ng-template #errorTemplate>
