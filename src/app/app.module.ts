@@ -22,7 +22,7 @@ import { FormComponent } from './features/home/form/form.component';
 import { HomeComponent } from './features/home/home.component';
 import { ListComponent } from './features/home/list/list.component';
 import { PaginationComponent } from './features/home/list/pagination/pagination.component';
-import { LoaderComponent } from './shared/loader/loader.component';
+import { LoaderComponent } from './shared/components/loader/loader.component';
 
 @NgModule({
   declarations: [

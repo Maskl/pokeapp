@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { catchError, mapTo, shareReplay, switchMap } from 'rxjs/operators';
 
-import { PokeApiService } from '../../../shared/poke-api.service';
+import { PokeApiService } from '../../../shared/services/poke-api.service';
 import { IPokemonListData } from '../../../shared/pokemon.model';
 
 @Component({
